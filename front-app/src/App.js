@@ -16,8 +16,20 @@ const config = {
 firebase.initializeApp(config)
 
 class App extends Component {
+  getData = () => {
+    firebase.database().ref('/users/').once('value')
+    .then((response) => {
+        console.log(response.val())
+    })
+    // firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+    //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    //   // ...
+    // });
+  }
+  
   render() {
     console.log(firebase.app().name)
+    this.getData()
     return (
       <div >
         <Header />
