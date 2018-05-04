@@ -8,15 +8,6 @@ body{
     height: 100px;
     background-color: black;
 }
-.footer{
-    position:absolute;
-    left:0;
-    bottom:0;
-    right:0;
-    padding-bottom:60px;
-    height: calc(100% - 60px);
-    background-color:gray;
-}
 
 .h1-font{
     margin: 0px;
@@ -26,12 +17,11 @@ body{
     text-align: center; 
 }
 .contentAll{
-    height: 72vh;
+    height: 100%;
     width: 100%;
     padding: 0 50px;
     margin-top:30px; 
-    margin-bottom:40px;
-    padding-bottom: 0 10px;
+    padding-bottom: 400px;
 }
 .contentLeft{
     padding: 24px 0;
