@@ -33,3 +33,8 @@ body{
     width:200;
     background: #fff;
 }
+.content-div{
+ padding: 24px;
+ background: '#fff'; 
+ min-Height: 360px;
+}
