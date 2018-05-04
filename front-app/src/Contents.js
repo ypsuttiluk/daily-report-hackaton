@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 const { SubMenu } = Menu;
-const { Header, Content, Footer, Sider } = Layout;
+const {  Content, Sider } = Layout;
 
 class Contents extends Component {
   render() {
