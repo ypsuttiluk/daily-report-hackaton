@@ -34,7 +34,9 @@ body{
     background: #fff;
 }
 .content-div{
- padding: 24px;
- background: '#fff'; 
- min-Height: 360px;
+    padding: 24px;
+    background: '#fff'; 
+    min-Height: 360px;
+    display: flex;
+    flex-direction: column;
 }
