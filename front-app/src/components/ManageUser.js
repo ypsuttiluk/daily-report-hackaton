@@ -28,7 +28,7 @@ export default class ManageUser extends Component {
   render() {
     return (
       <div className="input-box">
-        <Row><h1 className="margint-texth1">จัดการ user ในแต่ละทีม</h1></Row>
+        <Row><h1>จัดการ user ในแต่ละทีม</h1></Row>
         <Tabs defaultActiveKey="1" >
           <TabPane tab="เพิ่มสมาชิกเข้าทีม" key="1">
           <div className="center-user">
