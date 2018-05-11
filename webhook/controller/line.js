@@ -3,18 +3,9 @@ const firebase = require('firebase')
 const database = require('./database')
 const firebaseApp = database.firebaseApp
 
-// const firebaseApp = firebase.initializeApp({
-//   apiKey: "AIzaSyAPHQAAG6znTUbG6PL7Oiw2hwI50lrPtQY",
-//   authDomain: "daily-report-14ce7.firebaseapp.com",
-//   databaseURL: "https://daily-report-14ce7.firebaseio.com",
-//   projectId: "daily-report-14ce7",
-//   storageBucket: "daily-report-14ce7.appspot.com",
-//   messagingSenderId: "545247969478"
-// })
-
 let headers = {
   'Content-Type': 'application/json',
-  'Authorization': 'Bearer nhzcYNhPjdxEb5iD7i0qLk3ogT6jOHcqkchfrxZ5F4NfA2RWEDI0V7Uj3386cyYCQbNtWrlhCechWIUzP/NIdRlD7wKc41tz3iIhsZSZWxDFV/yvwcU3yJY3JRfHjt4YwXxDgBiPiUrdjLhWILrzaQdB04t89/1O/w1cDnyilFU='
+  'Authorization': 'Bearer EveOTG9Msy5GCAy9YIe18aLWzEm/1yVmOWZv/WIQF4JY6hM4vfl7x6vL5uqaU7EpQbNtWrlhCechWIUzP/NIdRlD7wKc41tz3iIhsZSZWxBluqFW1BR5uXtJvs/CjVvMiDkTCW3VF0uOKXPpq4VV4gdB04t89/1O/w1cDnyilFU='
 }
 
 const register = (reply_token, uid, name) => {
@@ -38,16 +29,13 @@ const register = (reply_token, uid, name) => {
 }
 
 const reply = async (reply_token, message, uid) => {
-  const team = await database.getTeamOfUser(uid)
-  const hasInitialYesterday = await database.hasInitialYesterday(team, uid)
+  const hasInitialYesterday = await database.hasInitialYesterday(uid)
   if(!hasInitialYesterday) {
-    const rootRef = firebaseApp.database().ref('teams')
+    const rootRef = firebaseApp.database().ref('reports')
     const time = database.createDateKey()
     const newMessageRef = rootRef
-      .child(team)
-      .child('reports')
-      .child(time)
       .child(uid)
+      .child(time)
       .child('yesterday')
       .set(message.text)
     let body = JSON.stringify({
@@ -57,7 +45,7 @@ const reply = async (reply_token, message, uid) => {
           text: 'วันนี้ทำอะไร ?'
       }]
     })
-    database.initialToday(team, uid)
+    database.initialToday(uid)
     return request.post({
         url: 'https://api.line.me/v2/bot/message/reply',
         headers: headers,
@@ -67,15 +55,13 @@ const reply = async (reply_token, message, uid) => {
     })
   }
 
-  const hasInitialToday = await database.hasInitialToday(team, uid)
+  const hasInitialToday = await database.hasInitialToday(uid)
   if(!hasInitialToday) {
-    const rootRef = firebaseApp.database().ref('teams')
+    const rootRef = firebaseApp.database().ref('reports')
     const time = database.createDateKey()
     const newMessageRef = rootRef
-      .child(team)
-      .child('reports')
-      .child(time)
       .child(uid)
+      .child(time)
       .child('today')
       .set(message.text)
     let body = JSON.stringify({
@@ -85,7 +71,7 @@ const reply = async (reply_token, message, uid) => {
           text: 'มีปัญหาอะไรไหม ?'
       }]
     })
-    database.initialProblem(team, uid)
+    database.initialProblem(uid)
     return request.post({
         url: 'https://api.line.me/v2/bot/message/reply',
         headers: headers,
@@ -95,15 +81,13 @@ const reply = async (reply_token, message, uid) => {
     })
   }
 
-  const hasInitialProblem = await database.hasInitialProblem(team, uid)
+  const hasInitialProblem = await database.hasInitialProblem(uid)
   if(!hasInitialProblem) {
-    const rootRef = firebaseApp.database().ref('teams')
+    const rootRef = firebaseApp.database().ref('reports')
     const time = database.createDateKey()
     const newMessageRef = rootRef
-      .child(team)
-      .child('reports')
-      .child(time)
       .child(uid)
+      .child(time)
       .child('problem')
       .set(message.text)
     let body = JSON.stringify({
@@ -147,7 +131,7 @@ const dailyTime = async () => {
   for (let team in teams) {
     const members =  await database.getMemberInTeam(team)
     members.map((uid) => {
-      database.initialYesterday(team, uid)
+      database.initialYesterday(uid)
       let body = JSON.stringify({
         to: uid,
         messages: [

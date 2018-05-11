@@ -3,12 +3,10 @@ import firebase from 'firebase'
 
 import Header from './components/Header'
 import Contents from './components/Content'
+import ManageTeam from './components/ManageTeam'
+import ManageUser from './components/ManageUser'
+import Team from './components/Team'
 import './App.css';
-<<<<<<< HEAD
-import Addteam from './components/Addteam';
-=======
-
->>>>>>> develop
 const config = {
   apiKey: "AIzaSyAPHQAAG6znTUbG6PL7Oiw2hwI50lrPtQY",
   authDomain: "daily-report-14ce7.firebaseapp.com",
@@ -36,9 +34,10 @@ class App extends Component {
     return (
       <div >
         <Header />
+        <ManageTeam/>
+        <ManageUser/>
         <Contents />
-        <Addteam />
-        
+        <Team />
       </div>
     );
   }
