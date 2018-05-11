@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Input, Row, Button } from 'antd';
+import { Input, Row, Button ,Form,  Icon } from 'antd';
+import Team from './Team'
+const FormItem = Form.Item;
 
+let uuid = 0;
 
 class Addteam extends Component {
 
@@ -28,9 +31,44 @@ class Addteam extends Component {
     Changemember = (event) => {
         this.setState({ members: event.target.value })
     }
+    remove = (k) => {
+        const { form } = this.props;
+        // can use data-binding to get
+        const keys = form.getFieldValue('keys');
+        // We need at least one passenger
+        if (keys.length === 1) {
+          return;
+        }
+    
+        // can use data-binding to set
+        form.setFieldsValue({
+          keys: keys.filter(key => key !== k),
+        });
+      }
+    
+      add = () => {
+        const { form } = this.props;
+        // can use data-binding to get
+        const keys = form.getFieldValue('keys');
+        const nextKeys = keys.concat(uuid);
+        uuid++;
+        // can use data-binding to set
+        // important! notify form to detect changes
+        form.setFieldsValue({
+          keys: nextKeys,
+        });
+      }
+    
+      handleSubmit = (e) => {
+        e.preventDefault();
+        this.props.form.validateFields((err, values) => {
+          if (!err) {
+            console.log('Received values of form: ', values);
+          }
+        });
+      }
 
     render() {
-
         return (
             <div className="team-input">
                 <form onSubmit={this.addteam} >
@@ -41,8 +79,9 @@ class Addteam extends Component {
                     <Row><Input type="text" placeholder="สมาชิก" /></Row>
                     {/* <button type="submit" />add */}
                     {/* <button type="submit" />delete */}
-                    <button type="submit" >Save</button>
-            </form>
+                    <button type="primary" >Save</button>
+                </form>
+                <Team />
             </div>
         );
     }
