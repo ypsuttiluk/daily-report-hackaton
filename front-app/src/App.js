@@ -6,6 +6,7 @@ import Contents from './components/Content'
 import ManageTeam from './components/ManageTeam'
 import ManageUser from './components/ManageUser'
 import Team from './components/Team'
+import SetTimeDaily from './components/SetTimeDaily'
 import './App.css';
 const config = {
   apiKey: "AIzaSyAPHQAAG6znTUbG6PL7Oiw2hwI50lrPtQY",
@@ -36,6 +37,7 @@ class App extends Component {
         <Header />
         <ManageTeam/>
         <ManageUser/>
+        <SetTimeDaily />
         <Contents />
         <Team />
       </div>
