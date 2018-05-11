@@ -3,7 +3,6 @@ import firebase from 'firebase'
 
 import Header from './components/Header'
 import Contents from './components/Content'
-import Footer from './components/Footer'
 import './App.css';
 
 const config = {
@@ -34,7 +33,6 @@ class App extends Component {
       <div >
         <Header />
         <Contents />
-        <Footer/>
       </div>
     );
   }
