@@ -48,3 +48,7 @@ body{
     justify-content: flex-end;
     margin-top: 20px;
 }
+
+.input-box{
+    width: 500px;
+}
