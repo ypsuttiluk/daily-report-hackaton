@@ -1,21 +1,24 @@
 import React from 'react'
 
-const Report = () => (
-  <div className="content-div" >
-    <div>เป็ด</div>
-    <ul>
-      <li>เมื่อวานทำอะไรบ้าง : นอนพัก</li>
-      <li>วันนี้จะทำอะไร : ตีปิงปอง</li>
-      <li>ติดปัญหาอะไรบ้าง : เบื่อหน้าพี่กานต์</li>
-    </ul>
-
-    <div>น้องวิว</div>
-    <ul>
-      <li>เมื่อวานทำอะไรบ้าง : ลองนอนพัก</li>
-      <li>วันนี้จะทำอะไร : ลองตีปิงปอง</li>
-      <li>ติดปัญหาอะไรบ้าง : ลองเบื่อหน้าพี่กานต์</li>
-    </ul>
-  </div>
-)
+const Report = (props) => {
+    return (
+      <div className="content-div" >
+      {
+        props.reports.length !== 0 && props.reports.map((report, index) => {
+          return (
+            <div key={`${report.name}-${index}`}>
+              <div>{report.name}</div>
+              <ul>
+                <li>เมื่อวานทำอะไรบ้าง : {report.message.yesterday}</li>
+                <li>วันนี้จะทำอะไร : {report.message.today}</li>
+                <li>ติดปัญหาอะไรบ้าง : {report.message.problem}</li>
+              </ul>
+            </div>
+          )
+        })
+      }
+    </div>
+  )
+}
 
 export default Report

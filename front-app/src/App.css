@@ -79,8 +79,9 @@ body{
     background: #fff;
 }
 .content-div{
-    padding: 24px;
-    background: '#fff'; 
+    padding: 20px;
+    margin: 10px;
+    background: rgb(184, 178, 178); 
     min-Height: 360px;
     display: flex;
     flex-direction: column;
@@ -110,7 +111,7 @@ body{
 
 }
 .margint-texth1{
-    margin-top: 10px;
+    margin-top: 50px;
 }
 /* .box-left{
     width: 30%;

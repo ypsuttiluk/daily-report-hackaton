@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { Select,Button,Row,Col,List,Card } from 'antd';
 import { Tabs } from 'antd';
+
 const TabPane = Tabs.TabPane;
 const {Option,OptGroup} = Select;
 export default class ManageUser extends Component {
@@ -162,7 +163,7 @@ export default class ManageUser extends Component {
     console.log('userNonTeam : ', this.state.userNonTeam)
     return (
       <div className="input-box">
-        <Row><h1 className="margint-texth1">จัดการ user ในแต่ละทีม</h1></Row>
+        <Row><h1>จัดการ user ในแต่ละทีม</h1></Row>
         <Tabs defaultActiveKey="1" >
           <TabPane tab="สมาชิก" key="1">
             <Row>
