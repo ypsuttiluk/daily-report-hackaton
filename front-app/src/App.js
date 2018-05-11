@@ -34,7 +34,6 @@ class App extends Component {
       <div >
         <Header />
         <Contents />   
-        <SetTimeDaily />
       </div>
     );
   }

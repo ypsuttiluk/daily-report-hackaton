@@ -9,6 +9,8 @@ import Report from './Report'
 import DatePicker from './DatePicker'
 import ManageTeam from './ManageTeam'
 import ManageUser from './ManageUser'
+// import SetTimeDaily from './SetTimeDaily'
+
 
 const { Content } = Layout
 
@@ -38,26 +40,26 @@ class Contents extends Component {
       })
 
       firebase.database().ref(`/reports/${user.uid}/${this.state.date}`).once('value')
-      .then(response => {
-        let reports = this.state.reports
-        
-        const report = {
-          name: data.name,
-          message: {
-            ...Object.values(response.val())[0]
-          },
-        }
+        .then(response => {
+          let reports = this.state.reports
 
-        reports.push(report)
-        this.setState({
-          reports,
+          const report = {
+            name: data.name,
+            message: {
+              ...Object.values(response.val())[0]
+            },
+          }
+
+          reports.push(report)
+          this.setState({
+            reports,
+          })
         })
-      })
-      .catch(() => {
-        this.setState({
-          reports: [],
+        .catch(() => {
+          this.setState({
+            reports: [],
+          })
         })
-      })
     })
   }
 
@@ -81,7 +83,7 @@ class Contents extends Component {
                   disabled={!this.state.enabledSelectDate}
                 />
               </div>
-              <Report reports={this.state.reports}/>
+              <Report reports={this.state.reports} />
             </Content>
           </Layout>
           <Content>
@@ -95,6 +97,11 @@ class Contents extends Component {
                 <ManageUser />
               </Content>
             </Row>
+            {/* <Row>
+              <Content className="content-team-layout">
+              <SetTimeDaily />
+              </Content>
+            </Row> */}
           </Content>
         </Content>
       </Layout>
