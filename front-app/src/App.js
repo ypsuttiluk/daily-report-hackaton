@@ -35,11 +35,8 @@ class App extends Component {
     return (
       <div >
         <Header />
-        <ManageTeam/>
-        <ManageUser/>
-        <Contents />
-        
-        <Team />
+        <Contents />   
+        {/* <Team /> */}
       </div>
     );
   }
