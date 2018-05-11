@@ -4,8 +4,11 @@ import { Layout } from 'antd'
 import filter from 'lodash.filter'
 import find from 'lodash.find'
 import Sidebar from './Sidebar'
+import Addteam from './Addteam';
 import Report from './Report'
 import DatePicker from './DatePicker'
+import ManageTeam from './ManageTeam'
+import ManageUser from './ManageUser'
 
 const { Content } = Layout
 
@@ -28,34 +31,6 @@ class Contents extends Component {
       enabledSelectDate: false,
     }
   }
-
-  // componentWillMount() {
-  //   firebase.database().ref('/teams/').once('value')
-  //   .then((response) => {
-  //     // console.log(response.val()['shop-thinknet'].members)
-  //     // console.log(response.val()['map-magic'].members)
-
-  //     response.val()['shop-thinknet'].members.map((member) => {
-  //       firebase.database().ref(`/users/${member}`).once('value')
-  //       .then((res) => {
-  //         this.setState({
-  //           TNStore: {
-  //             member: [
-  //               ...this.state.TNStore.member,
-  //               res.val(),
-  //             ]
-  //           }
-  //         })
-
-  //       })
-  //     })
-  //   })
-    
-  //   // firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-  //   //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-  //   //   // ...
-  //   // });
-  // }
 
   getReports = (users, teamName, membersKey) => {
     this.setState({
@@ -104,7 +79,7 @@ class Contents extends Component {
 
   render() {
     return (
-        <Layout>
+      <Layout>
         <Content className="contentAll">
           <Layout className="contentLeft">
             <Sidebar getReports={this.getReports} />
@@ -118,6 +93,16 @@ class Contents extends Component {
               <Report reports={this.state.reports}/>
             </Content>
           </Layout>
+          <Content>
+            <Content className="content-team" style={{ margin: '0 0px' }}>
+              < ManageTeam />
+              <Content className="content-user " style={{ margin: '0px 100px' }}>
+                <ManageUser />
+              </Content>
+            </Content>
+
+          </Content>
+
         </Content>
       </Layout>
     );
