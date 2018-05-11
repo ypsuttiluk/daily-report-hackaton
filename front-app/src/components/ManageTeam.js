@@ -1,49 +1,106 @@
 import React, { Component } from 'react';
-import { Input,Button,Row } from 'antd';
+import firebase from 'firebase';
+import { Input,Button,Row,Tabs } from 'antd';
 import '../App.css'
+
+const TabPane = Tabs.TabPane;
 export default class ManageTeam extends Component {
   constructor(props){
     super(props)
     this.state = {
-      isEdit: false
+      isEdit: false,
+      addTeamName: '',
+      editTeamNameOld: '',
+      editTeamNameNew: '',
+      deleteTeamName: '',
     }
   }
-  onEdit=()=>{
-    const {isEdit} = this.state
-    if(isEdit){
+
+  addTeam = () => {
+    firebase.database().ref('teams')
+    .child(this.state.addTeamName)
+    .set({name: this.state.addTeamName})
+    this.setState({
+      addTeamName: '',
+    })
+  }
+
+  editTeam = async () => {
+    const oldData =  new Promise((resolve) => {
+      firebase.database().ref('/teams/').once('value')
+      .then((response) => {
+       resolve(response.val()[this.state.editTeamNameOld])
+      })
+    })
+    oldData.then((data) => {
+      data.members.map((uid) => {
+      firebase.database().ref('users')
+        .child(uid)
+        .child('team')
+        .set(this.state.editTeamNameNew)
+      })
+      data.name = this.state.editTeamNameNew
+      firebase.database().ref('teams')
+      .child(this.state.editTeamNameNew)
+      .set(data)
+      firebase.database().ref('/teams/').child(this.state.editTeamNameOld).remove()
       this.setState({
-        isEdit: false
-      }) 
-    }else {
+        editTeamNameOld: '',
+        editTeamNameNew: '',
+      })
+    })
+  }
+
+  deleteTeam = () => {
+    const oldData =  new Promise((resolve) => {
+      firebase.database().ref('/teams/').once('value')
+      .then((response) => {
+       resolve(response.val()[this.state.deleteTeamName])
+      })
+    })
+    oldData.then((data) => {
+      if(typeof data.members !== 'undefined'){
+        data.members.map((uid) => {
+        firebase.database().ref('users')
+          .child(uid)
+          .child('team')
+          .remove()
+        })
+      }
+      firebase.database().ref('/teams/').child(this.state.deleteTeamName).remove()
       this.setState({
-        isEdit: true
-      })  
-    }
+        deleteTeamName: '',
+      })
+    })
   }
 
   render() {
     return (
       <div className="input-box">
       <Row>Manage Team</Row>
-      <Row>
-        <Input  placeholder="Team Name" />
-      </Row>
-      <Row>
-        <Button type="primary">Add Team</Button>
-      </Row>
-      <Row>
-          <Button onClick={this.onEdit}>Edit Team </Button>
-      </Row>
-      {this.state.isEdit &&
+      <Tabs defaultActiveKey="1">
+        <TabPane tab="Add Team" key="1">
+          <Row>
+            <Input placeholder="Team Name" value={this.state.addTeamName} onChange={(e) => {this.setState({addTeamName:e.target.value})}}/>
+          </Row>
+          <Row>
+            <Button type="primary" onClick={this.addTeam}>Add Team</Button>
+          </Row>
+        </TabPane>
+        <TabPane tab="Edit Team" key="2">
+          <Row>
+            <Input addonBefore="Old Name Team" placeholder="Team Name" value={this.state.editTeamNameOld} onChange={(e) => {this.setState({editTeamNameOld:e.target.value})}}/>
+            <Input addonBefore="New Name Team" placeholder="Team Name" value={this.state.editTeamNameNew} onChange={(e) => {this.setState({editTeamNameNew:e.target.value})}}/>
+            <Button onClick={this.editTeam}>OK</Button>
+          </Row>
+        </TabPane>
+        <TabPane tab="Delete Team" key="3">
         <Row>
-            <Input addonBefore="Old Name Team" placeholder="Team Name" />
-            <Input addonBefore="New Name Team" placeholder="Team Name" />
-            <Button onClick={this.onEdit}>OK</Button>
+        <Input addonBefore="Old Name Team" placeholder="Team Name" value={this.state.deleteTeamName} onChange={(e) => {this.setState({deleteTeamName:e.target.value})}}/>
+          <Button type="danger" onClick={this.deleteTeam}>Delete Team</Button>
         </Row>
-      }
-      <Row>
-        <Button type="danger">Delete Team</Button>
-      </Row>
+        </TabPane>
+      </Tabs>
       </div>
     )
   }
