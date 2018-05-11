@@ -48,12 +48,18 @@ body{
     background: #fff;
 }
 .content-team{
-    padding: 0 100px;
     min-height: 280px;
     background: #fff;
     display: flex;
     flex-flow:reverse;
     width: 555px;
+}
+.content-team-layout{
+    margin-top: 20px; 
+    padding: 0px 0px 20px 0px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
 }
 .content-box{
     width: auto;
@@ -94,6 +100,9 @@ body{
 .input-box{
     width: 500px;
     text-align: center;
+}
+.list-layout{
+    margin: 10px 0px 10px 0px;
 }
 .margint-botton{
     margin-top: 10px;

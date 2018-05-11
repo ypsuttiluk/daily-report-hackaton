@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
-import { Layout } from 'antd'
+import { Layout, Row } from 'antd'
 import filter from 'lodash.filter'
 import find from 'lodash.find'
 import Sidebar from './Sidebar'
@@ -16,16 +16,7 @@ class Contents extends Component {
   constructor() {
     super();
     this.state = {
-      reports: [
-        {
-          name: 'joe',
-          message: {
-            problem: 'ไม่มี',
-            yesterday: 'ไม่มี',
-            today: 'ไม่มี',
-          },
-        },
-      ],
+      reports: [],
       date: '',
       membersKey: [],
       enabledSelectDate: false,
@@ -94,15 +85,17 @@ class Contents extends Component {
             </Content>
           </Layout>
           <Content>
-            <Content className="content-team" style={{ margin: '0 0px' }}>
-              < ManageTeam />
-              <Content className="content-user " style={{ margin: '0px 100px' }}>
+            <Row>
+              <Content className="content-team-layout">
+                < ManageTeam />
+              </Content>
+            </Row>
+            <Row>
+              <Content className="content-team-layout">
                 <ManageUser />
               </Content>
-            </Content>
-
+            </Row>
           </Content>
-
         </Content>
       </Layout>
     );
