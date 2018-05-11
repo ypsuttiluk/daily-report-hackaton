@@ -4,7 +4,7 @@ import { Layout } from 'antd'
 import filter from 'lodash.filter'
 import find from 'lodash.find'
 import Sidebar from './Sidebar'
-import Addteam from './Addteam';
+import Addteam from './Addteam'
 import Report from './Report'
 import DatePicker from './DatePicker'
 import ManageTeam from './ManageTeam'
