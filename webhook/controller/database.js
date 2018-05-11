@@ -50,67 +50,60 @@ const getTeams = (team) => {
   return dataPromist
 }
 
-const initialYesterday = async (team, memberUid) => {
+const initialYesterday = async (memberUid) => {
   const time = createDateKey()
-  const rootRef = firebaseApp.database().ref('teams')
+  const rootRef = firebaseApp.database().ref('reports')
   const newMessageRef = rootRef
-    .child(team)
-    .child('reports')
-    .child(time)
     .child(memberUid)
+    .child(time)
     .child('yesterday')
     .set('null')
   newMessageRef.toString()
 }
 
-const initialToday = (team, memberUid) => {
+const initialToday = (memberUid) => {
   const time = createDateKey()
-  const rootRef = firebaseApp.database().ref('teams')
+  const rootRef = firebaseApp.database().ref('reports')
   const newMessageRef = rootRef
-    .child(team)
-    .child('reports')
-    .child(time)
     .child(memberUid)
+    .child(time)
     .child('today')
     .set('null')
   newMessageRef.toString()
 }
 
-const initialProblem = (team, memberUid) => {
+const initialProblem = (memberUid) => {
   const time = createDateKey()
-  const rootRef = firebaseApp.database().ref('teams')
+  const rootRef = firebaseApp.database().ref('reports')
   const newMessageRef = rootRef
-    .child(team)
-    .child('reports')
-    .child(time)
     .child(memberUid)
+    .child(time)
     .child('problem')
     .set('null')
   newMessageRef.toString()
 }
 
-const hasInitialYesterday = (team, memberUid) => {
+const hasInitialYesterday = (memberUid) => {
   const time = createDateKey()
-  const rootRef = firebaseApp.database().ref('teams')
-    .child(team)
-    .child('reports')
-    .child(time)
+  console.log('time ====>', time)
+  console.log('memberUid ====>', memberUid)
+  const rootRef = firebaseApp.database().ref('reports')
     .child(memberUid)
+    .child(time)
   const dataPromist = new Promise((resolve) => {
     rootRef.once('value', (snapshot) => {
       resolve(snapshot.val().yesterday === 'null'? false : true)
     })
   })
   return dataPromist
+  // return true
 }
 
-const hasInitialToday = (team, memberUid) => {
+const hasInitialToday = (memberUid) => {
   const time = createDateKey()
-  const rootRef = firebaseApp.database().ref('teams')
-    .child(team)
-    .child('reports')
-    .child(time)
+  const rootRef = firebaseApp.database().ref('reports')
     .child(memberUid)
+    .child(time)
   const dataPromist = new Promise((resolve) => {
     rootRef.once('value', (snapshot) => {
       resolve(snapshot.val().today === 'null'? false : true)
@@ -119,13 +112,11 @@ const hasInitialToday = (team, memberUid) => {
   return dataPromist
 }
 
-const hasInitialProblem = (team, memberUid) => {
+const hasInitialProblem = (memberUid) => {
   const time = createDateKey()
-  const rootRef = firebaseApp.database().ref('teams')
-    .child(team)
-    .child('reports')
-    .child(time)
+  const rootRef = firebaseApp.database().ref('reports')
     .child(memberUid)
+    .child(time)
   const dataPromist = new Promise((resolve) => {
     rootRef.once('value', (snapshot) => {
       resolve(snapshot.val().problem === 'null'? false : true)

@@ -7,12 +7,9 @@ router.post('/webhook', (req, res) => {
   const message = req.body.events[0].message.text
   const type = message.split(" ")[0]
   const name = typeof message.split(" ")[1] === 'undefined' ? null : message.split(" ")[1]
-  // if(name === null) {
-  //   return res.sendStatus(200)
-  // }
   if(type === 'register') {
     lineController.register(reply_token, req.body.events[0].source.userId, name)
-      return res.sendStatus(200)
+    return res.sendStatus(200)
   }
   lineController.reply(reply_token, req.body.events[0].message, req.body.events[0].source.userId)
   return res.sendStatus(200)
@@ -25,18 +22,5 @@ router.post('/push/message', (req, res) => {
   lineController.pushMessage()
   res.sendStatus(200)
 })
-// router.post('/database', (req, res) => {
-//   const body = req.body
-//   const rootRef = firebaseApp.database().ref('users')
-//   const newMessageRef = rootRef.push()
-//   newMessageRef.set({
-//   'user_id': 'ada',
-//   'text': 'The Analytical Engine weaves algebraical patterns just as the Jacquard loom weaves flowers and leaves.'
-//   })
-//   const path = newMessageRef.toString()
-//   console.log('path : ', path)
-//   console.log('body : ', body)
-//   res.sendStatus(200)
-// })
 
 module.exports = router
