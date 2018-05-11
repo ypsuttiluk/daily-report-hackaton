@@ -1,65 +1,84 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Icon ,Breadcrumb} from 'antd'
-import users from '../user.json'
+import firebase from 'firebase'
+import { Layout ,Breadcrumb} from 'antd'
+import Sidebar from './Sidebar'
 
-const { SubMenu } = Menu;
-const {  Content, Sider } = Layout;
-
+const { Content } = Layout
 
 class Contents extends Component {
   constructor() {
     super();
     this.state = {
+      TNStore: {
+        member: [],
+      },
+      MapMagic: {
+        member: [],
+      },
       name: '',
       message: {
-        a1: '',
-        a2: '',
-        a3: '', 
+        yesterday: '',
+        today: '',
+        problem: '', 
       }
     }
   }
 
+  componentWillMount() {
+    firebase.database().ref('/teams/').once('value')
+    .then((response) => {
+      // console.log(response.val()['shop-thinknet'].members)
+      // console.log(response.val()['map-magic'].members)
+
+      response.val()['shop-thinknet'].members.map((member) => {
+        firebase.database().ref(`/users/${member}`).once('value')
+        .then((res) => {
+          this.setState({
+            TNStore: {
+              member: [
+                ...this.state.TNStore.member,
+                res.val(),
+              ]
+            }
+          })
+
+        })
+      })
+    })
+    
+    // firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+    //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+    //   // ...
+    // });
+  }
+
   setUserID = (userID) => {
-    const userData = users.find(user => user.id === userID)
-    this.setState({
-      name:userData.name,
-      message :userData.message,
+    firebase.database().ref(`/users/${userID}`).once('value')
+    .then((response) => {
+      firebase.database().ref(`/teams/${response.val().team}`).once('value')
+      .then((res) => {
+        const members = Object.values(res.val().reports)
+        console.log(members[0][userID])
+        this.setState({
+          message: {
+            yesterday: members[0][userID].yesterday,
+            today: members[0][userID].today,
+            problem: members[0][userID].problem,
+          },
+        })
+        this.setState({
+          name: response.val().name,
+        })
+      })
     })
   }
 
   render() {
-    // console.log(user)
     return (
         <Layout>
         <Content className="contentAll">
           <Layout className="contentLeft">
-            <Sider className="MenuBar">
-              <Menu
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub']}
-                style={{ height: '100%' }}
-              >
-               <SubMenu key="sub" title={<span><Icon type="apple" />Team </span>}>
-                <SubMenu key="sub1" title={<span><Icon type="apple" />Team P'Set</span>}>
-                  <Menu.Item key="1"><p onClick={() => this.setUserID('1')}>วิว</p></Menu.Item>
-                  <Menu.Item key="2"><p onClick={() => this.setUserID('2')}>เป็ด</p></Menu.Item>
-                  <Menu.Item key="3"><p onClick={() => this.setUserID('3')}>บูท</p></Menu.Item>
-                  <Menu.Item key="4"><p onClick={() => this.setUserID('4')}>โจ</p></Menu.Item>
-                  <Menu.Item key="5"><p onClick={() => this.setUserID('5')}>บิว</p></Menu.Item>
-                </SubMenu>
-
-                <SubMenu key="sub2" title={<span><Icon type="apple-o" />Team P'Ice</span>}>
-                  <Menu.Item key="6"><p onClick={() => this.setUserID('6')}>นัย</p></Menu.Item>
-                  <Menu.Item key="7"><p onClick={() => this.setUserID('7')}>ทิว</p></Menu.Item>
-                  <Menu.Item key="8"><p onClick={() => this.setUserID('8')}>โอปอ</p></Menu.Item>
-                  <Menu.Item key="9"><p onClick={() => this.setUserID('9')}>ฟลุ๊ค</p></Menu.Item>
-                  <Menu.Item key="10"><p onClick={() => this.setUserID('10')}>ไบต์</p></Menu.Item>
-                  <Menu.Item key="11"><p onClick={() => this.setUserID('11')}>กานต์</p></Menu.Item>
-                </SubMenu>
-                </SubMenu>
-              </Menu>
-            </Sider>
+            <Sidebar setUserID={this.setUserID} />
             <Content className="contentRight" style={{ margin: '0 16px' }}>
             <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>User</Breadcrumb.Item>
@@ -67,9 +86,9 @@ class Contents extends Component {
             </Breadcrumb>
             <div className="content-div" >
               <ul>
-                <li>{this.state.message.a1}</li>
-                <li>{this.state.message.a2}</li>
-                <li>{this.state.message.a3}</li>
+                <li>เมื่อวานทำอะไรบ้าง : {this.state.message.yesterday}</li>
+                <li>วันนี้จะทำอะไร : {this.state.message.today}</li>
+                <li>ติดปัญหาอะไรบ้าง : {this.state.message.problem}</li>
               </ul>
             </div>
           </Content>
