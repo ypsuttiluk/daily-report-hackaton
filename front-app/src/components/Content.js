@@ -9,24 +9,30 @@ import Report from './Report'
 import DatePicker from './DatePicker'
 import ManageTeam from './ManageTeam'
 import ManageUser from './ManageUser'
-// import SetTimeDaily from './SetTimeDaily'
-
 
 const { Content } = Layout
+
+
+let today = new Date()
+today = `${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`
 
 class Contents extends Component {
   constructor() {
     super();
     this.state = {
+      users: [],
+      teamName: '',
       reports: [],
-      date: '',
+      date: today,
       membersKey: [],
       enabledSelectDate: false,
     }
   }
 
-  getReports = (users, teamName, membersKey) => {
+  getReports = (users, teamName, membersKey , date=this.state.date) => {
     this.setState({
+      users,
+      teamName,
       reports: [],
       membersKey,
       enabledSelectDate: true,
@@ -38,39 +44,41 @@ class Contents extends Component {
       const data = find(membersKey, (member) => {
         return member.uid === user.uid
       })
+      console.log('date : ', date)
+      firebase.database().ref(`/reports/${user.uid}/${date}`).once('value')
+      .then(response => {
+        let reports = this.state.reports
+        
+        console.log('sponse.val() : ',response.val())
+        const report = {
+          name: data.name,
+          message: response.val(),
+        }
 
-      firebase.database().ref(`/reports/${user.uid}/${this.state.date}`).once('value')
-        .then(response => {
-          let reports = this.state.reports
-
-          const report = {
-            name: data.name,
-            message: {
-              ...Object.values(response.val())[0]
-            },
-          }
-
-          reports.push(report)
-          this.setState({
-            reports,
-          })
+        reports.push(report)
+        this.setState({
+          reports,
         })
-        .catch(() => {
-          this.setState({
-            reports: [],
-          })
+      })
+      .catch(() => {
+        this.setState({
+          reports: [],
         })
+      })
     })
   }
 
   setDate = (date) => {
-    console.log(date)
     this.setState({
       date,
     })
+
+    const {users, teamName, membersKey} = this.state
+    this.getReports(users, teamName, membersKey, date)
   }
 
   render() {
+    console.log('reports ->>>>>',this.state.reports)
     return (
       <Layout>
         <Content className="contentAll">
@@ -83,7 +91,7 @@ class Contents extends Component {
                   disabled={!this.state.enabledSelectDate}
                 />
               </div>
-              <Report reports={this.state.reports} />
+              <Report reports={this.state.reports}/>
             </Content>
           </Layout>
           <Content>
@@ -97,11 +105,6 @@ class Contents extends Component {
                 <ManageUser />
               </Content>
             </Row>
-            {/* <Row>
-              <Content className="content-team-layout">
-              <SetTimeDaily />
-              </Content>
-            </Row> */}
           </Content>
         </Content>
       </Layout>
