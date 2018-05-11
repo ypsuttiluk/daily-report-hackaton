@@ -6,7 +6,7 @@ const onChange = (date) => {
   console.log('data =>>>',date._i)
 }
 
-DatePickerComponent = () => {
+const DatePickerComponent = () => {
   let today = new Date()
   today = `${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`
 
