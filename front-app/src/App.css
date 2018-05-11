@@ -43,3 +43,8 @@ body{
     display: flex;
     flex-direction: column;
 }
+.date-picker-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}

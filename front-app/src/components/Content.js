@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
-import { Layout ,Breadcrumb} from 'antd'
+import { Layout } from 'antd'
 import Sidebar from './Sidebar'
+import Report from './Report'
+import DatePicker from './DatePicker'
 
 const { Content } = Layout
 
@@ -80,18 +82,11 @@ class Contents extends Component {
           <Layout className="contentLeft">
             <Sidebar setUserID={this.setUserID} />
             <Content className="contentRight" style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>{this.state.name}</Breadcrumb.Item>
-            </Breadcrumb>
-            <div className="content-div" >
-              <ul>
-                <li>เมื่อวานทำอะไรบ้าง : {this.state.message.yesterday}</li>
-                <li>วันนี้จะทำอะไร : {this.state.message.today}</li>
-                <li>ติดปัญหาอะไรบ้าง : {this.state.message.problem}</li>
-              </ul>
-            </div>
-          </Content>
+              <div className="date-picker-right">
+                <DatePicker />
+              </div>
+              <Report />
+            </Content>
           </Layout>
         </Content>
       </Layout>
