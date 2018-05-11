@@ -6,7 +6,7 @@ const Report = (props) => {
       {
         props.reports.length !== 0 && props.reports.map((report, index) => {
           return (
-            <div key={`${report.name}-${index}`}>
+            report.message !== null && <div key={`${report.name}-${index}`}>
               <div>{report.name}</div>
               <ul>
                 <li>เมื่อวานทำอะไรบ้าง : {report.message.yesterday}</li>
