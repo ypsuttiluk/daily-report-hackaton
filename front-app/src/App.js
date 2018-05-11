@@ -7,6 +7,7 @@ import ManageTeam from './components/ManageTeam'
 import ManageUser from './components/ManageUser'
 import Team from './components/Team'
 import './App.css';
+
 const config = {
   apiKey: "AIzaSyAPHQAAG6znTUbG6PL7Oiw2hwI50lrPtQY",
   authDomain: "daily-report-14ce7.firebaseapp.com",
@@ -34,10 +35,8 @@ class App extends Component {
     return (
       <div >
         <Header />
-        <ManageTeam/>
-        <ManageUser/>
-        <Contents />
-        <Team />
+        <Contents />   
+        {/* <Team /> */}
       </div>
     );
   }
