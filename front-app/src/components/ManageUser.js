@@ -2,6 +2,7 @@ import '../App.css'
 import React, { Component } from 'react';
 import { Select,Button,Row,Col } from 'antd';
 import { Tabs } from 'antd';
+
 const TabPane = Tabs.TabPane;
 const {Option,OptGroup} = Select;
 export default class ManageUser extends Component {
@@ -79,7 +80,6 @@ export default class ManageUser extends Component {
             <Row><Button   className="margint-botton" type="danger">นำสมาชิกออกจากทีม</Button></Row>
           </TabPane>
         </Tabs>
-        
       </div>
     )
   }

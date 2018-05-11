@@ -3,9 +3,7 @@ import firebase from 'firebase'
 
 import Header from './components/Header'
 import Contents from './components/Content'
-import ManageTeam from './components/ManageTeam'
-import ManageUser from './components/ManageUser'
-import Team from './components/Team'
+import SetTimeDaily from './components/SetTimeDaily'
 import './App.css';
 
 const config = {
@@ -36,7 +34,7 @@ class App extends Component {
       <div >
         <Header />
         <Contents />   
-        {/* <Team /> */}
+        <SetTimeDaily />
       </div>
     );
   }
