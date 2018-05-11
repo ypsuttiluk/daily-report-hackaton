@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Contents from './components/Content'
 import Footer from './components/Footer'
 import './App.css';
+
 const config = {
   apiKey: "AIzaSyAPHQAAG6znTUbG6PL7Oiw2hwI50lrPtQY",
   authDomain: "daily-report-14ce7.firebaseapp.com",
@@ -16,20 +17,19 @@ const config = {
 firebase.initializeApp(config)
 
 class App extends Component {
-  getData = () => {
-    firebase.database().ref('/users/').once('value')
-    .then((response) => {
-        console.log(response.val())
-    })
-    // firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-    //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
-    //   // ...
-    // });
-  }
+  // getData = () => {
+  //   firebase.database().ref('/teams/').once('value')
+  //   .then((response) => {
+  //       console.log(response.val())
+  //   })
+  //   // firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+  //   //   var username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+  //   //   // ...
+  //   // });
+  // }
   
   render() {
     console.log(firebase.app().name)
-    this.getData()
     return (
       <div >
         <Header />
