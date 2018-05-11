@@ -161,12 +161,13 @@ export default class ManageUser extends Component {
   render() {
     console.log('userNonTeam : ', this.state.userNonTeam)
     return (
-      <div>
-        <Row>จัดการ user ในแต่ละทีม</Row>
+      <div className="input-box">
+        <Row><h1 className="margint-texth1">จัดการ user ในแต่ละทีม</h1></Row>
         <Tabs defaultActiveKey="1" >
           <TabPane tab="สมาชิก" key="1">
             <Row>
-              <Col span={1}>
+              <Row className="list-layout">
+              <Col span={2}>
                 ทีม : 
               </Col>
               <Col span={7}>
@@ -176,7 +177,9 @@ export default class ManageUser extends Component {
                   })}
                 </Select>
               </Col>
-              <Col span={1}>
+              </Row>
+              <Row className="list-layout">
+              <Col span={2}>
                   เพิ่ม :
               </Col>
               {
@@ -189,26 +192,21 @@ export default class ManageUser extends Component {
                       })}
                     </Select>
                   </Col>
-                  <Col span={3}>
-                    <Button type="primary" onClick={this.addToTeam}>เพิ่มเข้าทีม</Button>
-                  </Col>
                 </div>
                 ) : (
                   <div>
-                    ไม่มี user ให้เพิ่มล่ะ
+                    <Col span={7}>ไม่มี user ให้เพิ่มล่ะ</Col>
                   </div>
                 )
               }
             </Row>
             <Row>
-              สมาชิก
-              <ul>
-                {this.state.members.map((member) => {
-                  return(<li key={member.uid}>{member.name}</li>)
-                })}
-              </ul>
+              <Col offset={2} span={3}>
+                <Button type="primary" onClick={this.addToTeam}>เพิ่มเข้าทีม</Button>
+              </Col>
             </Row>
-            <Row>
+            </Row>
+            <Row className="list-layout">
               <List
                 grid={{ gutter: 16, xs: 1, sm: 2, md: 4, lg: 4, xl: 6, xxl: 3 }}
                 dataSource={this.state.members}

@@ -47,6 +47,33 @@ body{
     min-height: 280px;
     background: #fff;
 }
+.content-team{
+    min-height: 280px;
+    background: #fff;
+    display: flex;
+    flex-flow:reverse;
+    width: 555px;
+}
+.content-team-layout{
+    margin-top: 20px; 
+    padding: 0px 0px 20px 0px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+}
+.content-box{
+    width: auto;
+    height: auto;
+}
+.content-user{
+    padding: 50px;
+    min-height: 250px;
+    background: #fff;
+    display: flex;
+    flex-flow:reverse;
+    width: 500%;
+
+}
 .MenuBar{
     width:200;
     background: #fff;
@@ -58,6 +85,11 @@ body{
     display: flex;
     flex-direction: column;
 }
+.team-input{
+    width: 500px;
+    margin:  20px 20px 20px;
+    text-align: center;
+  }
 .date-picker-right {
     display: flex;
     justify-content: flex-end;
@@ -66,4 +98,30 @@ body{
 
 .input-box{
     width: 500px;
+    text-align: center;
+}
+.list-layout{
+    margin: 10px 0px 10px 0px;
+}
+.margint-botton{
+    margin-top: 10px;
+    
+   
+
+}
+.margint-texth1{
+    margin-top: 10px;
+}
+/* .box-left{
+    width: 30%;
+}
+.box-right{
+    width: 70%;
+} */
+.center-user{
+    display: flex;
+    justify-content: center;
+}
+.margint-inputteam{
+    margin-left: 10px;
 }

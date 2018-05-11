@@ -77,27 +77,27 @@ export default class ManageTeam extends Component {
   render() {
     return (
       <div className="input-box">
-      <Row>Manage Team</Row>
+      <Row><h1 className="margint-texth1">Manage Team</h1></Row>
       <Tabs defaultActiveKey="1">
         <TabPane tab="Add Team" key="1">
           <Row>
             <Input placeholder="Team Name" value={this.state.addTeamName} onChange={(e) => {this.setState({addTeamName:e.target.value})}}/>
           </Row>
-          <Row>
-            <Button type="primary" onClick={this.addTeam}>Add Team</Button>
+          <Row >
+            <Button className="margint-botton" type="primary" onClick={this.addTeam}>Add Team</Button>
           </Row>
         </TabPane>
         <TabPane tab="Edit Team" key="2">
           <Row>
-            <Input addonBefore="Old Name Team" placeholder="Team Name" value={this.state.editTeamNameOld} onChange={(e) => {this.setState({editTeamNameOld:e.target.value})}}/>
+            <Input  addonBefore="Old Name Team" placeholder="Team Name" value={this.state.editTeamNameOld} onChange={(e) => {this.setState({editTeamNameOld:e.target.value})}}/>
             <Input addonBefore="New Name Team" placeholder="Team Name" value={this.state.editTeamNameNew} onChange={(e) => {this.setState({editTeamNameNew:e.target.value})}}/>
-            <Button onClick={this.editTeam}>OK</Button>
+            <Button  className="margint-botton" onClick={this.editTeam}>OK</Button>
           </Row>
         </TabPane>
         <TabPane tab="Delete Team" key="3">
         <Row>
         <Input addonBefore="Old Name Team" placeholder="Team Name" value={this.state.deleteTeamName} onChange={(e) => {this.setState({deleteTeamName:e.target.value})}}/>
-          <Button type="danger" onClick={this.deleteTeam}>Delete Team</Button>
+          <Button  className="margint-botton" type="danger" onClick={this.deleteTeam}>Delete Team</Button>
         </Row>
         </TabPane>
       </Tabs>
