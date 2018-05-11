@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import firebase from 'firebase'
 import { Layout ,Breadcrumb} from 'antd'
 import Sidebar from './Sidebar'
+import Addteam from './Addteam';
 
 const { Content } = Layout
 
@@ -93,6 +94,12 @@ class Contents extends Component {
             </div>
           </Content>
           </Layout>
+          <Content className="contentRight" style={{ margin: '0 16px' }}>
+          
+        <Addteam />
+          
+          </Content>
+          
         </Content>
       </Layout>
     );
