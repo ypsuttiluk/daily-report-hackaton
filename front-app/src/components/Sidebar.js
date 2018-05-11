@@ -29,7 +29,7 @@ class Sidebar extends Component {
       const teamsValue= Object.values(data)
       
       teamsValue.map(team => {
-        team.members.map((uid, index) => {
+        typeof team.members !== 'undefined' && team.members.map((uid, index) => {
           const name = new Promise((resolve) => {
             firebase.database().ref(`/users/${uid}/name`).once('value')
             .then(response => {
@@ -55,7 +55,7 @@ class Sidebar extends Component {
 
   renderMember = (teamName) => {
     return this.state.teamsValue.map((team,index) => {
-      return team.name === teamName && team.members.map((name) => {
+      return team.name === teamName && typeof team.members !== 'undefined' && team.members.map((name) => {
         const uid = find(this.state.membersKey, (member) => {
           return member.name === name
         })
