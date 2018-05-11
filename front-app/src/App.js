@@ -3,6 +3,9 @@ import firebase from 'firebase'
 
 import Header from './components/Header'
 import Contents from './components/Content'
+import ManageTeam from './components/ManageTeam'
+import ManageUser from './components/ManageUser'
+import Team from './components/Team'
 import './App.css';
 
 const config = {
@@ -32,8 +35,11 @@ class App extends Component {
     return (
       <div >
         <Header />
+        <ManageTeam/>
+        <ManageUser/>
         <Contents />
         
+        <Team />
       </div>
     );
   }

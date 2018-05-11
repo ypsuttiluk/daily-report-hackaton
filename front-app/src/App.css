@@ -5,16 +5,31 @@ body{
 }
 .header-top{
     width: auto;
-    height: 100px;
+    height: 60px;
     background-color: black;
+}
+.block{
+    display: flex;
+    width: 100%;
+
+}
+.block-left{
+   width: 80%;
+}
+
+.block-right{
+    width: 20%;
 }
 
 .h1-font{
     margin: 0px;
-    padding-top: 33px;
+    padding-top: 13px;
     font-family: 'Lobster', cursive;
     color: white;
-    text-align: center; 
+    text-align: left; 
+}
+.icon{
+    margin: 0px 9px 0px 20px;
 }
 .contentAll{
     height: 100%;
@@ -48,3 +63,12 @@ body{
     margin:  20px 20px 20px;
     text-align: center;
   }
+.date-picker-right {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.input-box{
+    width: 500px;
+}
