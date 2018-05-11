@@ -33,7 +33,7 @@ export default class ManageTeam extends Component {
       })
     })
     oldData.then((data) => {
-      data.members.map((uid) => {
+      typeof data.members!== 'undefined' && data.members.map((uid) => {
       firebase.database().ref('users')
         .child(uid)
         .child('team')
