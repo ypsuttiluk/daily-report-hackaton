@@ -4,6 +4,7 @@ import firebase from 'firebase'
 import Header from './components/Header'
 import Contents from './components/Content'
 import './App.css';
+import Addteam from './components/Addteam';
 const config = {
   apiKey: "AIzaSyAPHQAAG6znTUbG6PL7Oiw2hwI50lrPtQY",
   authDomain: "daily-report-14ce7.firebaseapp.com",
@@ -21,6 +22,8 @@ class App extends Component {
       <div >
         <Header />
         <Contents />
+        <Addteam />
+        
       </div>
     );
   }
