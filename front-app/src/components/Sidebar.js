@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Layout, Menu, Icon } from 'antd'
 import firebase from 'firebase'
-import forEach from 'lodash.foreach'
+import find from 'lodash.find'
 
 const { SubMenu } = Menu
 const { Sider } = Layout
@@ -10,41 +10,67 @@ class Sidebar extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      teams: [],
+      teamsKey: [],
+      teamsValue: [],
+      membersKey: [],
     }
   }
 
   componentWillMount() {
-    firebase.database().ref('/teams/').once('value')
-    .then((response) => {
-      const teams = response.val()
-      this.setState({
-        teams,
+    const response = new Promise((resolve) => {
+      firebase.database().ref('/teams/').once('value')
+      .then((response) => {
+        resolve(response.val())
       })
+    })
 
-      forEach(teams, ({members}, key) => {
-        if(typeof members !== 'undefined') {
-          members.map((uid, index) => {
+    response.then((data) => {
+      const teamsKey = Object.keys(data)
+      const teamsValue= Object.values(data)
+      
+      teamsValue.map(team => {
+        team.members.map((uid, index) => {
+          const name = new Promise((resolve) => {
             firebase.database().ref(`/users/${uid}/name`).once('value')
-            .then((user) => {
-              const teamState = this.state.teams
-              teamState[`${key}`].members[index] = user.val()
-              // const team = { name: key, members: members.push(user.val())}
-              // teams.push(team)
-              this.setState({
-                teams: teamState,
-              })
+            .then(response => {
+              resolve(response.val())
             })
           })
-        }
+          name.then(name => {
+            team.members[index] = name
+
+            this.setState({
+              teamsKey: teamsKey,
+              teamsValue: teamsValue,
+              membersKey: [
+                ...this.state.membersKey,
+                { team: team.name, uid, name }
+              ]
+            })
+          })
+        })
       })
     })
   }
 
+  renderMember = (teamName) => {
+    return this.state.teamsValue.map((team,index) => {
+      return team.name === teamName && team.members.map((name) => {
+        const uid = find(this.state.membersKey, (member) => {
+          return member.name === name
+        })
+        return (
+          <Menu.Item><p onClick={() => this.getReport([uid], teamName)}>{name}</p></Menu.Item>
+        )
+      })
+    })
+  }
+
+  getReport = (uid, teamName) => {
+    this.props.getReports(uid, teamName, this.state.membersKey)
+  }
 
   render() {
-    console.log(this.state.teams)
-    
     return(
       <Sider className="MenuBar">
         <Menu
@@ -54,25 +80,14 @@ class Sidebar extends Component {
           style={{ height: '100%' }}
         >
           <SubMenu key="sub" title={<span><Icon type="apple" />Team </span>}>
-              {/* {this.state.teams.map((team, index) => {
+              {this.state.teamsKey.map((team, index) => {
                 return (
-                <SubMenu key={`${index}`} title={<span><Icon type="apple" />{index}</span>}>
+                <SubMenu key={`${team}-${index}`} title={<span><Icon type="apple" />{team}</span>}>
+                  <Menu.Item><p onClick={() => this.getReport(this.state.membersKey, team)}>ทั้งหมด</p></Menu.Item>
+                  {this.renderMember(team)}
                 </SubMenu>
                 )
-              })} */}
-              {/* <SubMenu key="TN-Store" title={<span><Icon type="apple" />TN-Store </span>}>
-                <Menu.Item key="1"><p>ทั้งหมด</p></Menu.Item>
-                <Menu.Item key="2"><p>เป็ด</p></Menu.Item>
-                <Menu.Item key="3"><p>บิว</p></Menu.Item>
-              </SubMenu> */}
-              {/* <Menu.Item key="4"><p>BOF-Jobthai-Upgrade</p></Menu.Item> */}
-              {/* {this.state.MapMagic.member.map((uid, index) => {
-            return (
-              <Menu.Item key={`MapMagic-${index}`}><p onClick={() => this.props.setUserID(uid)}>{uid}</p></Menu.Item>
-            )
-          })} */}
-              {/* <Menu.Item key="5"><p>MapMagic</p></Menu.Item> */}
-    
+              })}
           </SubMenu>
         </Menu>
       </Sider>
